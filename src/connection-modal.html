@@ -32,7 +32,7 @@
 
       <div class="buttons">
         <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button dialog-confirm autofocus>Connect</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="connect">Connect</paper-button>
       </div>
     </paper-dialog>
   </template>
@@ -44,6 +44,23 @@
       // Open the modal dialog
       open(){
         this.$.connectionModal.open()
+      }
+
+      // Fire an event with the connection data
+      connect(e){
+        let ipc = require('electron').ipcRenderer;
+        let connectionData = {
+          host: this.$.host.value,
+          port: this.$.port.value,
+          user: this.$.user.value,
+          pass: this.$.pass.value,
+          db: this.$.db.value
+        }
+        ipc.once('connection-made', function(event, response){
+            // processResponse(response);
+            console.log(response)
+        })
+        ipc.send('db-connect', connectionData);
       }
     }
     customElements.define(ConnectionModal.is, ConnectionModal);
