@@ -2,6 +2,8 @@
 <link rel="import" href="../bower_components/the-grid/the-grid.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 
 <dom-module id="schemer-app">
   <template>
@@ -22,11 +24,17 @@
             color: #EEEEEE;
           }
        }
+       paper-item:hover {
+         cursor: pointer;
+         font-weight: bold;
+         background: #616161;
+       }
     </style>
 
     <app-drawer-layout>
       <app-drawer slot="drawer">
         <h1>Schemer</h1>
+        <paper-item on-tap="openConnectionModal">New Connection</paper-item>
       </app-drawer>
 
       <the-grid draggable animated cell-height="100" cell-width="100" col-count="18" row-count="12">
@@ -40,11 +48,19 @@
         <div placeholder></div>
       </the-grid>
     </app-drawer-layout>
+
+    <paper-dialog id="connectionModal" modal>
+      <p>Hello</p>
+    </paper-dialog>
   </template>
 
   <script>
     class SchemerApp extends Polymer.Element {
       static get is() { return 'schemer-app'; }
+
+      openConnectionModal(e){
+        this.$.connectionModal.open()
+      }
     }
     customElements.define(SchemerApp.is, SchemerApp);
   </script>
