@@ -1,0 +1,23 @@
+{
+  "name"    : "schemer",
+  "version" : "0.1.0",
+  "description": "The electron app for turning your database schema into an ER diagram",
+  "main"    : "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/SchemerApp/schemer-desktop",
+  "keywords": [
+    "Electron",
+    "schema",
+    "Polymer",
+    "database",
+    "sql",
+    "entity",
+    "relationship",
+    "diagram"
+  ],
+  "devDependencies": {
+    "electron": "~1.6.2"
+  }
+}
