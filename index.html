@@ -3,8 +3,30 @@
   <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
+    <link rel="import" href="bower_components/the-grid/the-grid.html">
+    <style>
+        the-grid .tile {
+            background: #ff4d43;
+            opacity: 0.9;
+            color: white;
+            cursor: move;
+            overflow: hidden;
+        }
+        the-grid [placeholder] {
+            background: #afafaf;
+        }
+        </style>
   </head>
   <body>
-    <h1>Hello World!</h1>
+    <the-grid draggable animated cell-height="50" cell-width="50" col-count="15" row-count="12" cell-margin="10">
+    <div class="tile" col="0" row="0" height="1" width="4">
+      <p>Sample text</p>
+    </div>
+    <div class="tile" col="0" row="1" height="3" width="1">
+      <p>Sample text</p>
+    </div>
+    </div>
+    <div placeholder></div>
+</the-grid>
   </body>
 </html>

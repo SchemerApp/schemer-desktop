@@ -1,0 +1,28 @@
+{
+  "name": "schemer",
+  "private": true,
+  "description": "The electron app for turning your database schema into an ER diagram",
+  "main": "main.js",
+  "license": "MIT",
+  "keywords": [
+    "electron",
+    "schema",
+    "polymer",
+    "database",
+    "sql",
+    "entity",
+    "relationship"
+  ],
+  "homepage": "https://github.com/SchemerApp/schemer-desktop",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0-rc.3",
+    "the-grid": "vpusher/the-grid#^1.0.1"
+  }
+}
