@@ -1,15 +1,11 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/the-grid/the-grid.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 
 <dom-module id="schemer-app">
   <template>
     <style>
-      :host {
-        width: auto;
-        height: auto;
-        display: inline-block;
-
-      }
       the-grid .tile {
         background: #ff4d43;
         opacity: 0.9;
@@ -20,18 +16,30 @@
       the-grid [placeholder] {
         background: #afafaf;
       }
+      app-drawer {
+         --app-drawer-content-container: {
+            background-color: #424242;
+            color: #EEEEEE;
+          }
+       }
     </style>
 
-    <the-grid draggable animated cell-height="100" cell-width="100" col-count="18" row-count="12">
-      <div class="tile" col="5" row="2" height="1" width="4">
-        <p>Sample text</p>
-      </div>
-      <div class="tile" col="0" row="1" height="3" width="1">
-        <p>Sample text</p>
-      </div>
-      </div>
-      <div placeholder></div>
-    </the-grid>
+    <app-drawer-layout>
+      <app-drawer slot="drawer">
+        <h1>Schemer</h1>
+      </app-drawer>
+
+      <the-grid draggable animated cell-height="100" cell-width="100" col-count="18" row-count="12">
+        <div class="tile" col="5" row="2" height="1" width="4">
+          <p>Sample text</p>
+        </div>
+        <div class="tile" col="0" row="1" height="3" width="1">
+          <p>Sample text</p>
+        </div>
+        </div>
+        <div placeholder></div>
+      </the-grid>
+    </app-drawer-layout>
   </template>
 
   <script>

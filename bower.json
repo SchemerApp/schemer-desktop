@@ -23,6 +23,13 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0-rc.3",
-    "the-grid": "vpusher/the-grid#^1.0.1"
+    "the-grid": "vpusher/the-grid#^1.0.1",
+    "app-layout": "PolymerElements/app-layout#2.0-preview"
+  },
+  "resolutions": {
+    "iron-flex-layout": "2.0-preview",
+    "iron-media-query": "2.0-preview",
+    "iron-resizable-behavior": "2.0-preview",
+    "iron-scroll-target-behavior": "2.0-preview"
   }
 }
