@@ -1,0 +1,50 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/app-layout/app-grid/app-grid-style.html">
+
+<dom-module id="connection-modal">
+  <template>
+    <style include="app-grid-style">
+      :host {
+        display: block;
+        --app-grid-columns: 3;
+        --app-grid-gutter: 10px;
+        --app-grid-expandible-item-columns: 2;
+      }
+      .large {
+        @apply(--app-grid-expandible-item);
+      }
+    </style>
+
+    <paper-dialog id="connectionModal" modal>
+      <h2>New Connection</h2>
+
+      <div class="app-grid">
+        <paper-input id="host" class="large" label="Server Address"></paper-input>
+        <paper-input id="port" label="Port"></paper-input>
+
+        <paper-input id="user" label="Username"></paper-input>
+        <paper-input id="pass" label="Password" type="password"></paper-input>
+      </div>
+
+      <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button dialog-confirm autofocus>Connect</paper-button>
+      </div>
+    </paper-dialog>
+  </template>
+
+  <script>
+    class ConnectionModal extends Polymer.Element {
+      static get is() { return 'connection-modal'; }
+
+      // Open the modal dialog
+      open(){
+        this.$.connectionModal.open()
+      }
+    }
+    customElements.define(ConnectionModal.is, ConnectionModal);
+  </script>
+</dom-module>

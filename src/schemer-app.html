@@ -3,7 +3,7 @@
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="connection-modal.html">
 
 <dom-module id="schemer-app">
   <template>
@@ -49,9 +49,7 @@
       </the-grid>
     </app-drawer-layout>
 
-    <paper-dialog id="connectionModal" modal>
-      <p>Hello</p>
-    </paper-dialog>
+    <connection-modal id="connectionModal"></connection-modal>
   </template>
 
   <script>
