@@ -1,0 +1,44 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+
+<dom-module id="entity-tile">
+  <template>
+    <style>
+      :host {
+        cursor: move;
+      }
+      paper-card {
+        --paper-card-header: {
+          background: #4DB6AC;
+        }
+      }
+      #columns {
+        list-style: none;
+        padding: 0px;
+      }
+    </style>
+    <paper-card heading="{{table.name}}">
+      <div class="card-content">
+        <ul id="columns">
+          <template is="dom-repeat" items="{{table.columns}}">
+            <li>{{item.name}}</li>
+          </template>
+        </ul>
+      </div>
+    </paper-card>
+  </template>
+
+  <script>
+    class EntityTile extends Polymer.Element {
+      static get is() { return 'entity-tile'; }
+
+      static get properties() {
+        return {
+          // Table schema
+          table: Object,
+        }
+      }
+    }
+    customElements.define(EntityTile.is, EntityTile);
+  </script>
+</dom-module>
