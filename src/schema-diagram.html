@@ -51,16 +51,23 @@
 
       drawDiagram(schema){
         for (let i = 0; i < schema.length; i++){
-          let tile = document.createElement('entity-tile')
-          let columnCount = schema[i].columns.length
-          tile.setAttribute("table", JSON.stringify(schema[i]))
-          tile.setAttribute("col", i + 2)
-          tile.setAttribute("row", i + 2)
-          tile.setAttribute("height", columnCount + 5)
-          tile.setAttribute("width", schema[i].name.length)
+          let tile = this.createEntityTile(schema[i], i + 2, i + 2)
           Polymer.dom(this.$.grid).appendChild(tile)
         }
         this.$.grid.connectedCallback() // This is necessary for the `track` gesture to be applied
+      }
+
+      createEntityTile(tableInfo, x, y){
+        let tile = document.createElement('entity-tile')
+        let columnCount = tableInfo.columns.length
+
+        tile.setAttribute("table", JSON.stringify(tableInfo))
+        tile.setAttribute("col", x)
+        tile.setAttribute("row", y)
+        tile.setAttribute("height", columnCount + 5)
+        tile.setAttribute("width", tableInfo.name.length)
+
+        return tile
       }
     }
 
