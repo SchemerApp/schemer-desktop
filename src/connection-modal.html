@@ -56,10 +56,6 @@
           pass: this.$.pass.value,
           db: this.$.db.value
         }
-        ipc.once('connection-made', function(event, response){
-            // processResponse(response);
-            console.log(response)
-        })
         ipc.send('db-connect', connectionData);
       }
     }

@@ -31,11 +31,7 @@
         <paper-item on-tap="openConnectionModal">New Connection</paper-item>
       </app-drawer>
 
-      <the-grid draggable animated cell-height="100" cell-width="100" col-count="18" row-count="12">
-        <entity-tile col="5" row="2" table='{"name": "Test", "columns": [{"name": "id", "type": "int"},{"name": "age", "type": "string"}]}'>
-        </entity-tile>
-        <entity-tile col="0" row="1" table='{"name": "Something"}'>
-        </entity-tile>
+      <the-grid id="grid" draggable animated cell-height="100" cell-width="100" col-count="18" row-count="12">
         <div placeholder></div>
       </the-grid>
     </app-drawer-layout>
@@ -49,6 +45,23 @@
 
       openConnectionModal(e){
         this.$.connectionModal.open()
+      }
+
+      ready(){
+        super.ready()
+        let ipc = require('electron').ipcRenderer;
+        var node = this // This is so the callback can have a reference
+        ipc.once('connection-made', function(event, response){
+
+            for (let i = 0; i < response.length; i++){
+              let tile = document.createElement('entity-tile')
+              tile.setAttribute("table", JSON.stringify(response[i]))
+              tile.setAttribute("col", i + 1)
+              tile.setAttribute("row", i + 1)
+              Polymer.dom(node.$.grid).appendChild(tile)
+            }
+            node.$.grid.connectedCallback() // This is necessary for the `track` gesture to be applied
+        })
       }
     }
     customElements.define(SchemerApp.is, SchemerApp);
