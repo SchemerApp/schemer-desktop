@@ -8,11 +8,19 @@
       the-grid [placeholder] {
         background: #afafaf;
       }
+      the-grid {
+        position: absolute;   /*This is so the SVG layer can be on top*/
+      }
     </style>
 
     <the-grid id="grid" draggable animated cell-height="100" cell-width="100" col-count="18" row-count="12">
       <div placeholder></div>
     </the-grid>
+
+    <svg id="lineLayer" width="1800" height="1200" viewBox="0 0 1800 1200">
+      <path fill="none" stroke="#424242" stroke-width="5"
+        d="M 50, 50 L 100, 100 l 25, 0" />
+    </svg>
   </template>
 
   <script>
