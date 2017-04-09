@@ -5,6 +5,7 @@
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="connection-modal.html">
 <link rel="import" href="entity-tile.html">
+<link rel="import" href="schema-diagram.html">
 
 <dom-module id="schemer-app">
   <template>
@@ -31,9 +32,7 @@
         <paper-item on-tap="openConnectionModal">New Connection</paper-item>
       </app-drawer>
 
-      <the-grid id="grid" draggable animated cell-height="100" cell-width="100" col-count="18" row-count="12">
-        <div placeholder></div>
-      </the-grid>
+      <schema-diagram id="grid"></schema-diagram>
     </app-drawer-layout>
 
     <connection-modal id="connectionModal"></connection-modal>
@@ -52,15 +51,7 @@
         let ipc = require('electron').ipcRenderer;
         var node = this // This is so the callback can have a reference
         ipc.once('connection-made', function(event, response){
-
-            for (let i = 0; i < response.length; i++){
-              let tile = document.createElement('entity-tile')
-              tile.setAttribute("table", JSON.stringify(response[i]))
-              tile.setAttribute("col", i + 1)
-              tile.setAttribute("row", i + 1)
-              Polymer.dom(node.$.grid).appendChild(tile)
-            }
-            node.$.grid.connectedCallback() // This is necessary for the `track` gesture to be applied
+            node.$.grid.drawDiagram(response)
         })
       }
     }

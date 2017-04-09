@@ -1,0 +1,36 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/the-grid/the-grid.html">
+<link rel="import" href="entity-tile.html">
+
+<dom-module id="schema-diagram">
+  <template>
+    <style>
+      the-grid [placeholder] {
+        background: #afafaf;
+      }
+    </style>
+
+    <the-grid id="grid" draggable animated cell-height="100" cell-width="100" col-count="18" row-count="12">
+      <div placeholder></div>
+    </the-grid>
+  </template>
+
+  <script>
+    class SchemaDiagram extends Polymer.Element {
+      static get is() { return 'schema-diagram'; }
+
+      drawDiagram(schema){
+        for (let i = 0; i < schema.length; i++){
+          let tile = document.createElement('entity-tile')
+          tile.setAttribute("table", JSON.stringify(schema[i]))
+          tile.setAttribute("col", i + 1)
+          tile.setAttribute("row", i + 1)
+          Polymer.dom(this.$.grid).appendChild(tile)
+        }
+        this.$.grid.connectedCallback() // This is necessary for the `track` gesture to be applied
+      }
+    }
+
+    customElements.define(SchemaDiagram.is, SchemaDiagram);
+  </script>
+</dom-module>
