@@ -16,12 +16,15 @@
         list-style: none;
         padding: 0px;
       }
+      .col-type {
+        color: #BDBDBD
+      }
     </style>
     <paper-card heading="{{table.name}}">
       <div class="card-content">
         <ul id="columns">
           <template is="dom-repeat" items="{{table.columns}}">
-            <li>{{item.name}}</li>
+            <li>{{item.name}} - <span class="col-type">{{item.type}}</span></li>
           </template>
         </ul>
       </div>

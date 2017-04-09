@@ -59,9 +59,28 @@ ipc.on('db-connect', function(event, data){
     }
 
     mysqlspec(config, function (err, schema) {
-      event.sender.send('connection-made', schema)
+      event.sender.send('connection-made', formatSchema(schema))
     });
-});
+})
 
+// Parse the schema returned by `sqlspec` into something friendlier
+function formatSchema(schema) {
+  let formatted = []
+
+  Object.keys(schema).forEach(function(item){
+    formatted.push({"name": item, "columns": formatColumns(schema[item].properties)})
+  })
+  return formatted
+}
+
+// Helper for table columns
+function formatColumns(columns){
+  let formatted = []
+
+  Object.keys(columns).forEach(function(item){
+    formatted.push({"name": item, "type": columns[item].type})
+  })
+  return formatted
+}
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
