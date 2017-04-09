@@ -13,7 +13,12 @@
       }
     </style>
 
-    <the-grid id="grid" draggable animated cell-height="100" cell-width="100" col-count="18" row-count="12">
+    <the-grid id="grid" draggable animated
+      cell-height="{{gridSize.cellSize}}"
+      cell-width="{{gridSize.cellSize}}"
+      col-count="{{gridSize.columns}}"
+      row-count="{{gridSize.rows}}"
+      cell-margin="10">
       <div placeholder></div>
     </the-grid>
 
@@ -27,12 +32,32 @@
     class SchemaDiagram extends Polymer.Element {
       static get is() { return 'schema-diagram'; }
 
+      static get properties() {
+        return {
+
+          // Info related to the size of the grid
+          gridSize: {
+            type: Object,
+            value: function() {
+              return {
+                cellSize: 15,
+                columns: 50,
+                rows: 50
+              }
+            }
+          }
+        }
+      }
+
       drawDiagram(schema){
         for (let i = 0; i < schema.length; i++){
           let tile = document.createElement('entity-tile')
+          let columnCount = schema[i].columns.length
           tile.setAttribute("table", JSON.stringify(schema[i]))
-          tile.setAttribute("col", i + 1)
-          tile.setAttribute("row", i + 1)
+          tile.setAttribute("col", i + 2)
+          tile.setAttribute("row", i + 2)
+          tile.setAttribute("height", columnCount + 5)
+          tile.setAttribute("width", schema[i].name.length)
           Polymer.dom(this.$.grid).appendChild(tile)
         }
         this.$.grid.connectedCallback() // This is necessary for the `track` gesture to be applied
