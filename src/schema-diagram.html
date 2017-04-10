@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/the-grid/the-grid.html">
+<link rel="import" href="../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
 <link rel="import" href="entity-tile.html">
 
 <dom-module id="schema-diagram">
@@ -22,14 +23,14 @@
       <div placeholder></div>
     </the-grid>
 
-    <svg id="lineLayer" width="1800" height="1200" viewBox="0 0 1800 1200">
-      <path fill="none" stroke="#424242" stroke-width="5"
+    <svg id="lineLayer" width="1240" height="1240" viewBox="0 0 1240 1240">
+      <path id="line" fill="none" stroke="#424242" stroke-width="5"
         d="M 50, 50 L 100, 100 l 25, 0" />
     </svg>
   </template>
 
   <script>
-    class SchemaDiagram extends Polymer.Element {
+    class SchemaDiagram extends Polymer.GestureEventListeners(Polymer.Element) {
       static get is() { return 'schema-diagram'; }
 
       static get properties() {
@@ -66,8 +67,16 @@
         tile.setAttribute("row", y)
         tile.setAttribute("height", columnCount + 5)
         tile.setAttribute("width", tableInfo.name.length)
+        Polymer.Gestures.addListener(tile, 'track', e => this.handleTrack(e))
 
         return tile
+      }
+
+      handleTrack(e){
+        let tile = e.target
+        let rect = tile.getBoundingClientRect()
+
+        this.$.line.setAttribute("d", "M " + rect.left + ", " + rect.top + " L 100, 100 l 25, 0");
       }
     }
 
