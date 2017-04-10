@@ -46,6 +46,11 @@
                 rows: 50
               }
             }
+          },
+
+          // Number of pixels to offset when drawing the relationship lines.
+          menuOffset: {
+            type: Number,
           }
         }
       }
@@ -74,9 +79,20 @@
 
       handleTrack(e){
         let tile = e.target
+
+        this._moveRelationships(tile)
+      }
+
+      // Move the relationship lines for the given tile
+      _moveRelationships(tile){
         let rect = tile.getBoundingClientRect()
 
-        this.$.line.setAttribute("d", "M " + rect.left + ", " + rect.top + " L 100, 100 l 25, 0");
+        let tilePosition = {
+          left: rect.left - this.menuOffset + window.scrollX,
+          top: rect.top + window.scrollY
+        }
+
+        this.$.line.setAttribute("d", "M " + tilePosition.left.toString() + ", " + tilePosition.top.toString() + " L 100, 100 l 25, 0");
       }
     }
 

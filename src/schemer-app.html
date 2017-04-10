@@ -25,7 +25,7 @@
     </style>
 
     <app-drawer-layout>
-      <app-drawer slot="drawer">
+      <app-drawer id="menu" slot="drawer">
         <h1>Schemer</h1>
         <paper-item on-tap="openConnectionModal">New Connection</paper-item>
       </app-drawer>
@@ -51,6 +51,19 @@
         ipc.once('connection-made', function(event, response){
             node.$.grid.drawDiagram(response)
         })
+
+        // TODO: fix this so it doesn't use magic-numbers
+        this.$.grid.menuOffset = 256
+        this.$.menu.addEventListener('app-drawer-transitioned', e => {this._handleMenuToggle(e)});
+      }
+
+      _handleMenuToggle(e) {
+        if (this.$.menu.opened){
+          this.$.grid.menuOffset = 256
+        }
+        else {
+          this.$.grid.menuOffset = 0
+        }
       }
     }
     customElements.define(SchemerApp.is, SchemerApp);
