@@ -19,6 +19,6 @@
   ],
   "devDependencies": {
     "electron": "~1.6.2",
-    "mysqlspec": "^1.0.4"
+    "mysqlspec": "SchemerApp/node-mysqlspec"
   }
 }

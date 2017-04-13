@@ -68,7 +68,7 @@ function formatSchema(schema) {
   let formatted = []
 
   Object.keys(schema).forEach(function(item){
-    formatted.push({"name": item, "columns": formatColumns(schema[item].properties)})
+    formatted.push({"name": item, "columns": formatColumns(schema[item].properties), "relations": schema[item].relations})
   })
   return formatted
 }
