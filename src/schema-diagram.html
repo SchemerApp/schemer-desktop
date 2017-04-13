@@ -36,6 +36,12 @@
       static get properties() {
         return {
 
+          // Collection of tiles in the grid
+          tiles: {
+            type: Array,
+            value: function() { return []; }
+          },
+
           // Info related to the size of the grid
           gridSize: {
             type: Object,
@@ -56,9 +62,31 @@
       }
 
       drawDiagram(schema){
+        // 1 loop to create the tiles
         for (let i = 0; i < schema.length; i++){
           let tile = this.createEntityTile(schema[i], i + 2, i + 2)
+          this.tiles.push(tile)
           Polymer.dom(this.$.grid).appendChild(tile)
+        }
+
+        // Another loop to create relationships between tiles
+        // Though not *entirely* necessary, this second loop exists because it
+        // guarantees that all tiles are created, so that each line has a start
+        // and end point.
+        // The alternative implementation would be to first draw the tiles which have no relations
+        for (let i = 0; i < schema.length; i++){
+          if (schema[i].relations.length > 0){
+            let relations = schema[i].relations
+
+            for (let j = 0; j < relations.length; j++ ){
+              let table = relations[j].split(".")[0]  // Parse the table from `table.column`
+              let related = this.tiles.find(function (item) {
+                return item.table.name === table
+              })
+
+              this.tiles[i].addRelation(related)
+            }
+          }
         }
         this.$.grid.connectedCallback() // This is necessary for the `track` gesture to be applied
       }

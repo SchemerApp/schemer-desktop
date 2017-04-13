@@ -41,7 +41,18 @@
         return {
           // Table schema
           table: Object,
+
+          // List of all `<entity-tile>`s this tile is related to
+          relations: {
+            type: Array,
+            value: function() { return []; }
+          }
         }
+      }
+
+      // Add a tile to the list of relations
+      addRelation(tile){
+        this.relations.push(tile)
       }
     }
     customElements.define(EntityTile.is, EntityTile);
