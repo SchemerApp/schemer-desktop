@@ -85,6 +85,7 @@
               })
 
               this.tiles[i].addRelation(related)
+              this.drawRelations(this.tiles[i])
             }
           }
         }
@@ -103,6 +104,35 @@
         Polymer.Gestures.addListener(tile, 'track', e => this.handleTrack(e))
 
         return tile
+      }
+
+      drawRelations(tile){
+        let relations = tile.relations
+        let rect = tile.getBoundingClientRect()
+
+        let tilePosition = {
+          left: rect.left - this.menuOffset + window.scrollX,
+          top: rect.top + window.scrollY
+        }
+
+        for (let i = 0; i < relations.length; i++){
+          let line = document.createElementNS('http://www.w3.org/2000/svg',"path")
+
+          let related = relations[i]
+          let relatedRect = related.getBoundingClientRect()
+          let relatedTilePosition = {
+            left: relatedRect.left - this.menuOffset + window.scrollX,
+            top: relatedRect.top + window.scrollY
+          }
+
+          line.setAttributeNS(null, "id", tile.table.name + "-" + related.table.name)
+          line.setAttributeNS(null, "fill", "none")
+          line.setAttributeNS(null, "stroke", "#424242")
+          line.setAttributeNS(null, "stroke-width", "5")
+          line.setAttributeNS(null, "d", "M " + tilePosition.left.toString() + ", " + tilePosition.top.toString() +
+                                " L " + relatedTilePosition.left.toString() + ", " + relatedTilePosition.top.toString());
+          Polymer.dom(this.$.lineLayer).appendChild(line)
+        }
       }
 
       handleTrack(e){
