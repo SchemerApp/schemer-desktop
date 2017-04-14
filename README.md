@@ -1,5 +1,5 @@
 # schemer-desktop
-[![Gitter](https://img.shields.io/gitter/room/SchemerApp/Lobby.svg)]()
+[![Gitter](https://img.shields.io/gitter/room/SchemerApp/Lobby.svg)](https://gitter.im/SchemerApp/Lobby)
 
 > Note: This app is still in the very early stages.  Not all feature are implemented.
 
