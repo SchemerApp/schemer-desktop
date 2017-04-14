@@ -54,27 +54,46 @@
         }
       }
 
+      // Using the `start` and `end` tile, determine
+      // the coordinates of where the line will start
+      // and end
+      getLineEndpoints(start, end){
+        // Start Info
+        let startBounds = start.getBoundingClientRect()
+        let startTilePosition = {
+          left: startBounds.left - this.leftOffset + window.scrollX,
+          top: startBounds.top + window.scrollY
+        }
+
+        // End Info
+        let endBounds = end.getBoundingClientRect()
+        let endTilePosition = {
+          left: endBounds.left - this.leftOffset + window.scrollX,
+          top: endBounds.top + window.scrollY
+        }
+
+        // TODO: come up with a better way of deciding the points
+        // so that they don't always use the top left of the box.
+        // This is temporary
+        startTilePosition.x = startTilePosition.left
+        startTilePosition.y = startTilePosition.top
+
+        endTilePosition.x = endTilePosition.left
+        endTilePosition.y = endTilePosition.top
+
+        return {start: startTilePosition, end: endTilePosition}
+      }
+
       // Move the relationship lines for the given tile
       _moveRelationships(tile){
-        let rect = tile.getBoundingClientRect()
-
-        let tilePosition = {
-          left: rect.left - this.leftOffset + window.scrollX,
-          top: rect.top + window.scrollY
-        }
 
         for (let i = 0; i < tile.relations.length; i++){
           let relation = tile.table.name + "-" + tile.relations[i].table.name
-          let related = tile.relations[i]
-          let relatedRect = related.getBoundingClientRect()
-          let relatedTilePosition = {
-            left: relatedRect.left - this.leftOffset + window.scrollX,
-            top: relatedRect.top + window.scrollY
-          }
+          let coords = this.getLineEndpoints(tile, tile.relations[i])
           let line = Polymer.dom(this.root).querySelector("#" + relation)
 
-          line.setAttribute("d", "M " + tilePosition.left.toString() + ", " + tilePosition.top.toString() +
-                                " L " + relatedTilePosition.left.toString() + ", " + relatedTilePosition.top.toString());
+          line.setAttribute("d", "M " + coords.start.x.toString() + ", " + coords.start.y.toString() +
+                                " L " + coords.end.y.toString() + ", " + coords.end.y.toString());
         }
       }
     }
