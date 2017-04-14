@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0-rc.3",
-    "the-grid": "vpusher/the-grid#^1.0.1",
+    "the-grid": "bkjohnson/the-grid#c5854ea87b4589b993d0d11e612ce1ff6d07eb1d",
     "app-layout": "PolymerElements/app-layout#2.0-preview",
     "paper-item": "PolymerElements/paper-item#2.0-preview",
     "paper-dialog": "PolymerElements/paper-dialog#2.0-preview",
