@@ -2,6 +2,7 @@
 <link rel="import" href="../bower_components/the-grid/the-grid.html">
 <link rel="import" href="../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
 <link rel="import" href="entity-tile.html">
+<link rel="import" href="line-layer.html">
 
 <dom-module id="schema-diagram">
   <template>
@@ -23,8 +24,7 @@
       <div placeholder></div>
     </the-grid>
 
-    <svg id="lineLayer" width="1240" height="1240" viewBox="0 0 1240 1240">
-    </svg>
+    <line-layer left-offset="{{menuOffset}}" id="lineLayer"></line-layer>
   </template>
 
   <script>
@@ -83,7 +83,7 @@
               })
 
               this.tiles[i].addRelation(related)
-              this.drawRelations(this.tiles[i])
+              this.$.lineLayer.drawRelations(this.tiles[i])
             }
           }
         }
@@ -104,63 +104,10 @@
         return tile
       }
 
-      drawRelations(tile){
-        let relations = tile.relations
-        let rect = tile.getBoundingClientRect()
-
-        let tilePosition = {
-          left: rect.left - this.menuOffset + window.scrollX,
-          top: rect.top + window.scrollY
-        }
-
-        for (let i = 0; i < relations.length; i++){
-          let line = document.createElementNS('http://www.w3.org/2000/svg',"path")
-
-          let related = relations[i]
-          let relatedRect = related.getBoundingClientRect()
-          let relatedTilePosition = {
-            left: relatedRect.left - this.menuOffset + window.scrollX,
-            top: relatedRect.top + window.scrollY
-          }
-
-          line.setAttributeNS(null, "id", tile.table.name + "-" + related.table.name)
-          line.setAttributeNS(null, "fill", "none")
-          line.setAttributeNS(null, "stroke", "#424242")
-          line.setAttributeNS(null, "stroke-width", "5")
-          line.setAttributeNS(null, "d", "M " + tilePosition.left.toString() + ", " + tilePosition.top.toString() +
-                                " L " + relatedTilePosition.left.toString() + ", " + relatedTilePosition.top.toString());
-          Polymer.dom(this.$.lineLayer).appendChild(line)
-        }
-      }
-
       handleTrack(e){
         let tile = e.target
 
-        this._moveRelationships(tile)
-      }
-
-      // Move the relationship lines for the given tile
-      _moveRelationships(tile){
-        let rect = tile.getBoundingClientRect()
-
-        let tilePosition = {
-          left: rect.left - this.menuOffset + window.scrollX,
-          top: rect.top + window.scrollY
-        }
-
-        for (let i = 0; i < tile.relations.length; i++){
-          let relation = tile.table.name + "-" + tile.relations[i].table.name
-          let related = tile.relations[i]
-          let relatedRect = related.getBoundingClientRect()
-          let relatedTilePosition = {
-            left: relatedRect.left - this.menuOffset + window.scrollX,
-            top: relatedRect.top + window.scrollY
-          }
-          let line = Polymer.dom(this.root).querySelector("#" + relation)
-
-          line.setAttribute("d", "M " + tilePosition.left.toString() + ", " + tilePosition.top.toString() +
-                                " L " + relatedTilePosition.left.toString() + ", " + relatedTilePosition.top.toString());
-        }
+        this.$.lineLayer._moveRelationships(tile)
       }
     }
 
