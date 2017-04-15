@@ -62,26 +62,87 @@
         let startBounds = start.getBoundingClientRect()
         let startTilePosition = {
           left: startBounds.left - this.leftOffset + window.scrollX,
-          top: startBounds.top + window.scrollY
+          right: startBounds.right - this.leftOffset + window.scrollX,
+          top: startBounds.top + window.scrollY,
+          bottom: startBounds.bottom + window.scrollY,
         }
 
         // End Info
         let endBounds = end.getBoundingClientRect()
         let endTilePosition = {
           left: endBounds.left - this.leftOffset + window.scrollX,
-          top: endBounds.top + window.scrollY
+          right: endBounds.right - this.leftOffset + window.scrollX,
+          top: endBounds.top + window.scrollY,
+          bottom: endBounds.bottom + window.scrollY
+
         }
 
-        // TODO: come up with a better way of deciding the points
-        // so that they don't always use the top left of the box.
-        // This is temporary
-        startTilePosition.x = startTilePosition.left
-        startTilePosition.y = startTilePosition.top
+        let lineStart = {}
+        let lineEnd = {}
 
-        endTilePosition.x = endTilePosition.left
-        endTilePosition.y = endTilePosition.top
+        // TODO: try to make this easier to read and more efficient
+        if (startTilePosition.left < endTilePosition.left){ // The starting tile is to the left of the ending one
+          if (startTilePosition.top < endTilePosition.top){ // The starting tile is below the ending one...
+            if (startTilePosition.top > endTilePosition.bottom){  // But there is some overlap
+              lineStart.x = startTilePosition.right
+              lineStart.y = (startTilePosition.top + endTilePosition.bottom ) / 2
+              lineEnd.x = endTilePosition.left
+              lineEnd.y = lineStart.y
+            }
+            else {  // No overlap
+              lineStart.x = (startTilePosition.right + startTilePosition.left) / 2
+              lineStart.y = startTilePosition.top
+              lineEnd.x = (endTilePosition.right + endTilePosition.left) / 2
+              lineEnd.y = endTilePosition.bottom
+            }
+          }
+          else {  // The starting tile is above the ending one
+            if (startTilePosition.top < endTilePosition.bottom){  // But there is some overlap
+              lineStart.x = startTilePosition.right
+              lineStart.y = (startTilePosition.top + endTilePosition.bottom ) / 2
+              lineEnd.x = endTilePosition.left
+              lineEnd.y = lineStart.y
+            }
+            else {  // No overlap
+              lineStart.x = (startTilePosition.right + startTilePosition.left) / 2
+              lineStart.y = startTilePosition.bottom
+              lineEnd.x = (endTilePosition.right + endTilePosition.left) / 2
+              lineEnd.y = endTilePosition.top
+            }
+          }
+        }
+        else {  // The starting tile is to the right of the ending one
+          if (startTilePosition.top < endTilePosition.top){ // The starting tile is below the ending one...
+            if (startTilePosition.top > endTilePosition.bottom){  // But there is some overlap
+              lineStart.x = startTilePosition.left
+              lineStart.y = (startTilePosition.top + endTilePosition.bottom ) / 2
+              lineEnd.x = endTilePosition.right
+              lineEnd.y = lineStart.y
+            }
+            else {  // No overlap
+              lineStart.x = (startTilePosition.right + startTilePosition.left) / 2
+              lineStart.y = startTilePosition.top
+              lineEnd.x = (endTilePosition.right + endTilePosition.left) / 2
+              lineEnd.y = endTilePosition.bottom
+            }
+          }
+          else {  // The starting tile is above the ending one
+            if (startTilePosition.top < endTilePosition.bottom){  // But there is some overlap
+              lineStart.x = startTilePosition.left
+              lineStart.y = (startTilePosition.top + endTilePosition.bottom ) / 2
+              lineEnd.x = endTilePosition.right
+              lineEnd.y = lineStart.y
+            }
+            else {  // No overlap
+              lineStart.x = (startTilePosition.right + startTilePosition.left) / 2
+              lineStart.y = startTilePosition.bottom
+              lineEnd.x = (endTilePosition.right + endTilePosition.left) / 2
+              lineEnd.y = endTilePosition.top
+            }
+          }
+        }
 
-        return {start: startTilePosition, end: endTilePosition}
+        return {start: lineStart, end: lineEnd}
       }
 
       // Move the relationship lines for the given tile
