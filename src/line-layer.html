@@ -142,7 +142,9 @@
           }
         }
 
-        return {start: lineStart, end: lineEnd}
+        return {start: lineStart,
+                orth: {x: lineStart.x, y: lineEnd.y},
+                end: lineEnd}
       }
 
       // Move the relationship lines for the given tile
@@ -154,6 +156,7 @@
           let line = Polymer.dom(this.root).querySelector("#" + relation)
 
           line.setAttribute("d", "M " + coords.start.x.toString() + ", " + coords.start.y.toString() +
+                                " L " + coords.orth.x.toString() + ", " + coords.orth.y.toString() +
                                 " L " + coords.end.x.toString() + ", " + coords.end.y.toString());
         }
       }
