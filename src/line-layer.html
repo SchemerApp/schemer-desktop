@@ -81,7 +81,6 @@
         let lineEnd = {}
 
         // TODO: try to make this easier to read and more efficient
-        if (startTilePosition.left < endTilePosition.left){ // The starting tile is to the left of the ending one
           if (startTilePosition.top < endTilePosition.top){ // The starting tile is below the ending one...
             if (startTilePosition.top > endTilePosition.bottom){  // But there is some overlap
               lineStart.x = startTilePosition.right
@@ -110,37 +109,6 @@
               lineEnd.y = endTilePosition.top
             }
           }
-        }
-        else {  // The starting tile is to the right of the ending one
-          if (startTilePosition.top < endTilePosition.top){ // The starting tile is below the ending one...
-            if (startTilePosition.top > endTilePosition.bottom){  // But there is some overlap
-              lineStart.x = startTilePosition.left
-              lineStart.y = (startTilePosition.top + endTilePosition.bottom ) / 2
-              lineEnd.x = endTilePosition.right
-              lineEnd.y = lineStart.y
-            }
-            else {  // No overlap
-              lineStart.x = (startTilePosition.right + startTilePosition.left) / 2
-              lineStart.y = startTilePosition.top
-              lineEnd.x = (endTilePosition.right + endTilePosition.left) / 2
-              lineEnd.y = endTilePosition.bottom
-            }
-          }
-          else {  // The starting tile is above the ending one
-            if (startTilePosition.top < endTilePosition.bottom){  // But there is some overlap
-              lineStart.x = startTilePosition.left
-              lineStart.y = (startTilePosition.top + endTilePosition.bottom ) / 2
-              lineEnd.x = endTilePosition.right
-              lineEnd.y = lineStart.y
-            }
-            else {  // No overlap
-              lineStart.x = (startTilePosition.right + startTilePosition.left) / 2
-              lineStart.y = startTilePosition.bottom
-              lineEnd.x = (endTilePosition.right + endTilePosition.left) / 2
-              lineEnd.y = endTilePosition.top
-            }
-          }
-        }
 
         return {start: lineStart,
                 orth: {x: lineStart.x, y: lineEnd.y},
