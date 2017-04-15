@@ -159,6 +159,16 @@
                                 " L " + coords.orth.x.toString() + ", " + coords.orth.y.toString() +
                                 " L " + coords.end.x.toString() + ", " + coords.end.y.toString());
         }
+
+        for (let i = 0; i < tile.incoming.length; i++){
+          let relation = tile.incoming[i].table.name + "-" + tile.table.name
+          let coords = this.getLineEndpoints(tile.incoming[i], tile)
+          let line = Polymer.dom(this.root).querySelector("#" + relation)
+
+          line.setAttribute("d", "M " + coords.start.x.toString() + ", " + coords.start.y.toString() +
+                                " L " + coords.orth.x.toString() + ", " + coords.orth.y.toString() +
+                                " L " + coords.end.x.toString() + ", " + coords.end.y.toString());
+        }
       }
     }
 

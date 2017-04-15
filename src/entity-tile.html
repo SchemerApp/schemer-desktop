@@ -46,6 +46,12 @@
           relations: {
             type: Array,
             value: function() { return []; }
+          },
+
+          // List of all `<entity-tile>s which have a relation *TO* this tile
+          incoming: {
+            type: Array,
+            value: function() { return []; }
           }
         }
       }
@@ -53,6 +59,7 @@
       // Add a tile to the list of relations
       addRelation(tile){
         this.relations.push(tile)
+        tile.incoming.push(this)
       }
     }
     customElements.define(EntityTile.is, EntityTile);
