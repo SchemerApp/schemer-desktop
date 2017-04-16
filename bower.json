@@ -29,7 +29,8 @@
     "paper-dialog": "PolymerElements/paper-dialog#2.0-preview",
     "paper-input": "PolymerElements/paper-input#2.0-preview",
     "paper-button": "PolymerElements/paper-button#2.0-preview",
-    "paper-card": "PolymerElements/paper-card#2.0-preview"
+    "paper-card": "PolymerElements/paper-card#2.0-preview",
+    "schema-diagram": "^0.2.1"
   },
   "resolutions": {
     "iron-flex-layout": "2.0-preview",
