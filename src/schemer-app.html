@@ -37,12 +37,16 @@
       <app-drawer id="menu" slot="drawer">
         <h1>Schemer</h1>
         <paper-menu>
-          <paper-submenu>
+          <paper-submenu id="connectionsMenu">
             <paper-icon-item slot="menu-trigger">
               Connections
               <paper-icon-button icon="add" on-tap="openConnectionModal"></paper-icon-button>
             </paper-icon-item>
-            <paper-menu id="connections" slot="menu-content">
+
+            <paper-menu slot="menu-content">
+              <template is="dom-repeat" items="{{connections}}">
+                <paper-item>{{item.host}}</paper-item>
+              </template>
             </paper-menu>
           </paper-submenu>
         </paper-menu>
@@ -57,6 +61,28 @@
   <script>
     class SchemerApp extends Polymer.Element {
       static get is() { return 'schemer-app'; }
+
+      static get properties() {
+        return {
+          // List of all DB connections
+          connections: {
+            type: Array,
+            value: function () { return []}
+          }
+        }
+      }
+
+      static get observers() {
+        return [
+          'connectionsAddedOrRemoved(connections.splices)'
+        ]
+      }
+
+      connectionsAddedOrRemoved(changeRecord) {
+        if (changeRecord) {
+          this.$.connectionsMenu.open()
+        }
+      }
 
       openConnectionModal(e){
         this.$.connectionModal.open()
@@ -79,6 +105,8 @@
       _createConnection(e) {
         let ipc = require('electron').ipcRenderer;
         ipc.send('db-connect', e.detail.connectionData);
+
+        this.push('connections', e.detail.connectionData)
       }
 
       _handleMenuToggle(e) {
