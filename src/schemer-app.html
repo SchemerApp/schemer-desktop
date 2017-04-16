@@ -73,6 +73,12 @@
         // TODO: fix this so it doesn't use magic-numbers
         this.$.grid.menuOffset = 256
         this.$.menu.addEventListener('app-drawer-transitioned', e => {this._handleMenuToggle(e)});
+        this.$.connectionModal.addEventListener('db-connect', e => this._createConnection(e));
+      }
+
+      _createConnection(e) {
+        let ipc = require('electron').ipcRenderer;
+        ipc.send('db-connect', e.detail.connectionData);
       }
 
       _handleMenuToggle(e) {

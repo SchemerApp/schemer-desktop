@@ -48,7 +48,6 @@
 
       // Fire an event with the connection data
       connect(e){
-        let ipc = require('electron').ipcRenderer;
         let connectionData = {
           host: this.$.host.value,
           port: this.$.port.value,
@@ -56,7 +55,7 @@
           pass: this.$.pass.value,
           db: this.$.db.value
         }
-        ipc.send('db-connect', connectionData);
+        this.dispatchEvent(new CustomEvent('db-connect', {detail: {connectionData: connectionData}}));
       }
     }
     customElements.define(ConnectionModal.is, ConnectionModal);
