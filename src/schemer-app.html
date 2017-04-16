@@ -4,6 +4,11 @@
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="connection-modal.html">
 <link rel="import" href="../bower_components/schema-diagram/schema-diagram.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-menu/paper-submenu.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 
 <dom-module id="schemer-app">
   <template>
@@ -17,6 +22,10 @@
             color: #EEEEEE;
           }
        }
+       paper-menu {
+         background-color: #424242;
+         color: #EEEEEE;
+       }
        paper-item:hover {
          cursor: pointer;
          font-weight: bold;
@@ -27,7 +36,16 @@
     <app-drawer-layout>
       <app-drawer id="menu" slot="drawer">
         <h1>Schemer</h1>
-        <paper-item on-tap="openConnectionModal">New Connection</paper-item>
+        <paper-menu>
+          <paper-submenu>
+            <paper-icon-item slot="menu-trigger">
+              Connections
+              <paper-icon-button icon="add" on-tap="openConnectionModal"></paper-icon-button>
+            </paper-icon-item>
+            <paper-menu id="connections" slot="menu-content">
+            </paper-menu>
+          </paper-submenu>
+        </paper-menu>
       </app-drawer>
 
       <schema-diagram id="grid"></schema-diagram>
